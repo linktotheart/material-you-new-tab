@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import ClockAndWeatherWidget from './components/ClockAndWeatherWidget.vue'
 import GoogleSearchBookmarks from './components/GoogleSearchBookmarks.vue'
 </script>
