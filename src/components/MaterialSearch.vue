@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <div
-      class="search flex items-center bg-accent w-full p-2 pl-4 rounded-full focus-within:border-dark border-solid border-2"
+      class="search flex items-center bg-accent w-full p-2 pl-3 rounded-full focus-within:border-dark border-solid border-2"
     >
       <div class="icon">
         <svg
@@ -20,12 +20,12 @@
       <input
         type="text"
         v-model="search"
-        class="bg-transparent focus:outline-none focus:border-0 px-4 text-lg text-gray-700"
+        class="bg-transparent flex-1 focus:outline-none focus:border-0 px-4 text-gray-700"
         placeholder="What are you looking for?"
       />
       <button
         @click.stop="goToSearch"
-        class="h-12 py-1 px-6 text-light rounded-full grid place-content-center bg-dark hover:bg-darker"
+        class="py-2.5 px-6 text-light rounded-full grid place-content-center bg-dark hover:bg-darker"
       >
         Search
       </button>
@@ -35,10 +35,11 @@
       <p class="text-sm text-darker">Search with</p>
       <label
         class="inline-flex border-2 border-solid items-center gap-x-1.5 bg-opacity-90 transition-colors hover:bg-opacity-95 cursor-pointer py-1.5 px-3 rounded-full text-sm font-medium bg-accent text-dark"
-		:class="{'border-dark bg-opacity-100': selected === search.url }"
+        :class="{ 'border-dark bg-opacity-100': selected === search.url }"
         v-for="search in searchEngine"
         :key="search.label"
       >
+        <SVGSymbol :icon="search.icon" class="size-5" />
         {{ search.label }}
         <input
           type="radio"
@@ -54,19 +55,29 @@
 
 <script setup>
 import { ref } from "vue";
+import SVGSymbol from "./SVGSymbol.vue";
+import { useStorage } from "./../composable/SaveToLocal";
+
 const search = ref("");
 const searchEngine = ref([
-  { label: "Google", url: "https://www.google.com/search?q=" },
-  { label: "DuckDuckGo", url: "https://duckduckgo.com/?q=" },
-//   { label: "Bing", url: "https://bing.com/?q=" },
-  { label: "YouTube", url: "https://www.youtube.com/results?search_query=" }
+  { label: "Google", icon: "google", url: "https://www.google.com/search?q=" },
+  {
+    label: "DuckDuckGo",
+    icon: "duckduckgo",
+    url: "https://duckduckgo.com/?q="
+  },
+  //   { label: "Bing", url: "https://bing.com/?q=" },
+  {
+    label: "YouTube",
+    icon: "youtube",
+    url: "https://www.youtube.com/results?search_query="
+  }
 ]);
-const selected = ref("https://www.google.com/search?q=");
-
+let selected = useStorage("selected", "https://www.google.com/search?q=");
 
 const goToSearch = () => {
   if (search.value) {
-	window.open(selected.value + search.value, "_blank");
+    window.open(selected.value + search.value, "_blank");
   }
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
-	<div class="flex flex-col gap-8">
-		<MaterialClock />
-		<MaterialYouWeather />
-	</div>
+  <div class="flex flex-col gap-8">
+    <MaterialClock />
+    <MaterialYouWeather />
+  </div>
 </template>
 
 <script>
